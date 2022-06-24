@@ -1,0 +1,18 @@
+<ng-container *ngIf="movie">
+  <h1>{{ movie.Title }}</h1>
+
+  <div class="grid">
+    <div class="col-6">
+      <span>Released: </span>
+      <ng-container *ngIf="movie.Released !== 'N/A'">
+        {{ movie.Released | date: "mediumDate" }}
+      </ng-container>
+    </div>
+
+    <div class="col-6"><span>Runtime: </span> {{ movie.Runtime }}</div>
+
+    <div class="col-6"><span>Actors: </span> {{ movie.Actors }}</div>
+
+    <div class="col-6"><span>Director: </span> {{ movie.Director }}</div>
+  </div>
+</ng-container>

@@ -14,7 +14,13 @@
         [movies]="movies"
         [totalRecords]="totalRecords"
         (pageEvent)="onPageEvent($event)"
+        (selectedRowEvent)="onSelectedRowEvent($event)"
+        (unselectedRowEvent)="onUnselectedRowEvent($event)"
       ></app-movies-list>
+    </div>
+
+    <div class="col-6">
+      <app-movies-detail [movie]="movieDetail"></app-movies-detail>
     </div>
   </div>
 </div>

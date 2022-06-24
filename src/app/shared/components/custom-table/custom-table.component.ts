@@ -3,7 +3,6 @@ import {
   ContentChild,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   TemplateRef,
 } from '@angular/core';
@@ -14,31 +13,33 @@ import { LazyLoadEvent } from 'primeng/api';
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.scss'],
 })
-export class CustomTableComponent implements OnInit {
+export class CustomTableComponent {
   @Input() columns: any[] = [];
 
   @Input() data: any[] = [];
 
-  @Input() totalRecords: any;
+  @Input() totalRecords = 0;
 
   @Output() pageEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  @Output() selectedRowEvent: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() unselectedRowEvent: EventEmitter<any> = new EventEmitter<any>();
+
   first = 0;
+
+  selectedRow: any;
 
   @ContentChild('bodyTemplate', { read: TemplateRef }) bodyTemplate:
     | TemplateRef<any>
     | undefined;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  onLazyLoad(e: LazyLoadEvent) {
+  onLazyLoad(e: LazyLoadEvent): void {
     let page = 0;
-    let offset = e.first;
+    const offset = e.first;
 
     if (offset !== undefined) {
-      let offsetPage = offset.toString();
+      const offsetPage = offset.toString();
 
       switch (offsetPage.length) {
         case 1: {
@@ -60,5 +61,13 @@ export class CustomTableComponent implements OnInit {
     }
 
     this.pageEvent.emit(page);
+  }
+
+  onRowSelect(e: any): void {
+    this.selectedRowEvent.emit(e.data);
+  }
+
+  onRowUnselect(e: any): void {
+    this.unselectedRowEvent.emit(e.data);
   }
 }
