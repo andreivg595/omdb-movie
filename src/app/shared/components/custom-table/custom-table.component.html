@@ -1,0 +1,48 @@
+<!-- <p-table
+  [value]="movies"
+  [paginator]="true"
+  [rows]="10"
+  [(first)]="first"
+  [totalRecords]="totalRecords"
+  [lazy]="true"
+  (onLazyLoad)="onLazyLoad($event)"
+  [scrollable]="true"
+  selectionMode="single"
+  [(selection)]="movieSelected"
+  (onRowSelect)="onRowSelect($event)"
+> -->
+<p-table
+  [columns]="columns"
+  [value]="data"
+  [paginator]="true"
+  [rows]="10"
+  [(first)]="first"
+  [totalRecords]="totalRecords"
+  [lazy]="true"
+  (onLazyLoad)="onLazyLoad($event)"
+  [scrollable]="true"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-container *ngIf="bodyTemplate">
+    <ng-template pTemplate="body" let-data let-expanded="expanded">
+      <ng-container
+        *ngTemplateOutlet="
+          bodyTemplate;
+          context: {
+            $implicit: data,
+            columns: columns,
+            expanded: expanded,
+            context: this
+          }
+        "
+      >
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</p-table>

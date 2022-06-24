@@ -2,22 +2,14 @@ import { NgModule } from '@angular/core';
 
 // primeng imports
 import { InputTextModule } from 'primeng/inputtext';
-/* import { TableModule } from 'primeng/table';
-import { ImageModule } from 'primeng/image'; */
+import { TableModule } from 'primeng/table';
+import { ImageModule } from 'primeng/image';
 
-const primeNgModules = [
-  InputTextModule,
-  //TableModule,
-  //ImageModule
-];
+const primeNgModules = [InputTextModule, TableModule, ImageModule];
 
 @NgModule({
   declarations: [],
-  imports: [
-    ...primeNgModules
-  ],
-  exports: [
-    ...primeNgModules
-  ]
+  imports: [...primeNgModules],
+  exports: [...primeNgModules],
 })
-export class PrimengModule { }
+export class PrimengModule {}

@@ -1,0 +1,30 @@
+<app-custom-table
+  *ngIf="movies.length > 0"
+  [columns]="columns"
+  [data]="movies"
+  [totalRecords]="totalRecords"
+  (pageEvent)="onPageEvent($event)"
+>
+  <ng-template
+    #bodyTemplate
+    let-movie
+    let-columns="columns"
+    let-context="context"
+  >
+    <tr>
+      <ng-container *ngFor="let col of columns">
+        <ng-container [ngSwitch]="col.field">
+          <td *ngSwitchCase="'Poster'">
+            <p-image
+              *ngIf="movie.Poster && movie.Poster !== 'N/A'"
+              [src]="movie[col.field]"
+              width="50"
+            ></p-image>
+            <p *ngIf="movie.Poster === 'N/A'">Without picture</p>
+          </td>
+          <td *ngSwitchDefault>{{ movie[col.field] }}</td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </ng-template>
+</app-custom-table>

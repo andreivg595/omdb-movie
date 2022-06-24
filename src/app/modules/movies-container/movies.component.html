@@ -1,0 +1,20 @@
+<div class="movies-container p-5">
+  <h1>Movie Search Application</h1>
+
+  <div class="grid">
+    <div class="col-12">
+      <app-form-movie
+        (movieNameEvent)="onMovieNameEvent($event)"
+      ></app-form-movie>
+    </div>
+
+    <div class="col-6">
+      <app-movies-list
+        [columns]="columns"
+        [movies]="movies"
+        [totalRecords]="totalRecords"
+        (pageEvent)="onPageEvent($event)"
+      ></app-movies-list>
+    </div>
+  </div>
+</div>
