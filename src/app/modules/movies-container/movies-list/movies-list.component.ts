@@ -21,16 +21,4 @@ export class MoviesListComponent {
 
   @Output() unselectedRowEvent: EventEmitter<MovieData> =
     new EventEmitter<MovieData>();
-
-  onPageEvent(page: number): void {
-    this.pageEvent.emit(page);
-  }
-
-  onSelectedRowEvent(movie: MovieData): void {
-    this.selectedRowEvent.emit(movie);
-  }
-
-  onUnselectedRowEvent(movie: MovieData): void {
-    this.unselectedRowEvent.emit(movie);
-  }
 }

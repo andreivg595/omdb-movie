@@ -3,9 +3,9 @@
   [columns]="columns"
   [data]="movies"
   [totalRecords]="totalRecords"
-  (pageEvent)="onPageEvent($event)"
-  (selectedRowEvent)="onSelectedRowEvent($event)"
-  (unselectedRowEvent)="onUnselectedRowEvent($event)"
+  (pageEvent)="pageEvent.emit($event)"
+  (selectedRowEvent)="selectedRowEvent.emit($event)"
+  (unselectedRowEvent)="unselectedRowEvent.emit($event)"
 >
   <ng-template
     #bodyTemplate

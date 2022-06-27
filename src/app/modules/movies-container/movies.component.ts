@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CustomTableColumn } from 'src/app/core/models/custom-table-column.model';
 import { MovieData } from './models/movie-data.model';
 import { MoviesService } from './services/movies.service';
@@ -8,7 +9,7 @@ import { MoviesService } from './services/movies.service';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })
-export class MoviesComponent {
+export class MoviesComponent implements OnDestroy {
   movies: MovieData[] = [];
 
   totalRecords = 0;
@@ -25,9 +26,12 @@ export class MoviesComponent {
     { field: 'Poster', header: 'Poster' },
   ];
 
+  subscription: Subscription = new Subscription();
+
   constructor(private moviesService: MoviesService) {}
 
   onMovieNameEvent(movieName: string): void {
+    this.movieDetail = undefined;
     this.movieName = movieName;
     this.getMoviesByName(this.movieName);
   }
@@ -49,27 +53,35 @@ export class MoviesComponent {
   }
 
   getMoviesByName(movieName: string, page?: number): void {
-    this.moviesService
-      .getMoviesByName(movieName, page)
-      .subscribe(
-        (data: {
-          Response: string;
-          Search: MovieData[];
-          totalResults: string;
-        }) => {
-          if (data.Response === 'True') {
-            this.movies = data.Search;
-            this.totalRecords = Number(data.totalResults);
-          } else if (data.Response === 'False') {
-            this.movies = [];
+    this.subscription.add(
+      this.moviesService
+        .getMoviesByName(movieName, page)
+        .subscribe(
+          (data: {
+            Response: string;
+            Search: MovieData[];
+            totalResults: string;
+          }) => {
+            if (data.Response === 'True') {
+              this.movies = data.Search;
+              this.totalRecords = Number(data.totalResults);
+            } else if (data.Response === 'False') {
+              this.movies = [];
+            }
           }
-        }
-      );
+        )
+    );
   }
 
   getMovieByName(movieName: string): void {
-    this.moviesService.getMovieByName(movieName).subscribe((data) => {
-      this.movieDetail = data;
-    });
+    this.subscription.add(
+      this.moviesService.getMovieByName(movieName).subscribe((data) => {
+        this.movieDetail = data;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

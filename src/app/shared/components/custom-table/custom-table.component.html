@@ -10,8 +10,8 @@
   [scrollable]="true"
   selectionMode="single"
   [(selection)]="selectedRow"
-  (onRowSelect)="onRowSelect($event)"
-  (onRowUnselect)="onRowUnselect($event)"
+  (onRowSelect)="selectedRowEvent.emit($event.data)"
+  (onRowUnselect)="unselectedRowEvent.emit($event.data)"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>

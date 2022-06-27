@@ -62,12 +62,4 @@ export class CustomTableComponent {
 
     this.pageEvent.emit(page);
   }
-
-  onRowSelect(e: any): void {
-    this.selectedRowEvent.emit(e.data);
-  }
-
-  onRowUnselect(e: any): void {
-    this.unselectedRowEvent.emit(e.data);
-  }
 }
